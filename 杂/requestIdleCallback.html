@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    requestIdleCallback(myNonEssentialWork);
+
+    function myNonEssentialWork(deadline) {
+      // deadline.timeRemaining() 可以获取到当前帧剩余时间
+      while(deadline.timeRemaining() > 0 && tasks.length > 0) {
+        doWorkIfNeeded();
+      }
+
+      if (tasks.length > 0) {
+        requestIdleCallback(myNonEssentialWork);
+      }
+    }
+  </script>
+</body>
+</html>

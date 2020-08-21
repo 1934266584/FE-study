@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>blob</title>
+</head>
+<body>
+  
+</body>
+<script>
+//Blob(Binary Large Object，二进制类型的大对象)，表示一个不可变的原始数据的类文件对象，我们上传文件时常用的File对象就继承于Blob，并进行了扩展用于支持用户系统上的文件。
+  const debug = {
+    hello: 'world',
+  };
+
+// Blob对象存在两个只读属性：
+// size: Blob 对象中所包含数据的大小（字节）。
+// type: 一个字符串，表明该Blob对象所包含数据的MIME类型。如果类型未知，则该值为空字符串。
+  const blob = new Blob([JSON.stringify(debug, null, 2)], {
+    type: 'application/json',
+  })
+</script>
+</html>
