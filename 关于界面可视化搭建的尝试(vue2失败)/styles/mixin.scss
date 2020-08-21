@@ -1,0 +1,57 @@
+/** 2019/2/18
+ * @Author: 刘宇琳
+ * @Desc: flex布局
+ */
+ @mixin center($direction: row) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @mixin flex($direction: row, $inline: flex, $flexWrap: wrap, $justifyContent: space-between, $align-items: center) {
+    display: $inline;
+    flex-direction: $direction;
+    flex-wrap: $flexWrap;
+    justify-content: $justifyContent; 
+    align-items: $align-items;
+  }
+  
+  /** 2019/2/18
+   * @Author: 刘宇琳
+   * @Desc: 多行超出省略号
+   */
+  @mixin ell($lineNumber: 2) {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lineNumber;
+    overflow: hidden;
+  }
+
+  /** 2020/2/17
+   * @Author: 刘宇琳
+   * @Desc: 单行省略
+   */
+  @mixin oneEll {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /**
+ * @params: $showWidth 判断宽度是否要显示100%
+ * @Desc: 高度为44px的容器
+ */
+  @mixin containerH44($fontSize: $base-font-size, $color: $base-font-color, $showWidth: true, $width: 100%, $text-align: left, $height: 44px) {
+    height: $height;
+    line-height: $height;
+    font-size: $fontSize;
+    color: $color;
+    text-align: $text-align;
+
+    @if ($showWidth) {
+      width: $width;
+    }
+  }

@@ -1,0 +1,7 @@
+/** 2019/2/18
+  * @Author: 刘宇琳
+  * @Desc: 750的设计稿自动转换成375。后续好全局替换
+  */
+@function px2($value) {
+  @return $value / 2;
+}

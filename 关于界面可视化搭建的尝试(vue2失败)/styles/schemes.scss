@@ -1,0 +1,63 @@
+$List: 4, 6, 8, 12, 16;
+
+@each $gap in $List {
+  .mt#{$gap} {
+    margin-top: $gap + px;
+  }
+}
+
+@each $gap in $List {
+  .ml#{$gap} {
+    margin-left: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .mr#{$gap} {
+    margin-right: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .mb#{$gap} {
+    margin-bottom: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .mx#{$gap} {
+    margin-left: $gap * 1px;
+    margin-right: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .pl#{$gap} {
+    padding-left: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .pr#{$gap} {
+    padding-right: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .pt#{$gap} {
+    padding-top: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .pb#{$gap} {
+    padding-bottom: $gap * 1px;
+  }
+}
+
+@each $gap in $List {
+  .px#{$gap} {
+    padding-left: $gap * 1px;
+    padding-right: $gap * 1px;
+  }
+}
