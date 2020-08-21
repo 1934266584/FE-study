@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div>{{ count }}</div>
+    <button v-on:click="muchMore(500)">Add 500</button>
+    <button v-on:click="minus(minusDelta1)"> Minus on Click </button>
+    <pre>{{ $data }}</pre>
+  </div>
+  <script>
+    const { merge } = rxjs;
+    const {
+      startWith,
+      scan,
+      map
+    } = rxjs.operators;
+
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          minusDelta1: -1,
+          minusDelta2: -1
+        }
+      },
+      // declare callback Subjects
+      observableMethods: {
+        muchMore: 'muchMore$',
+        minus: 'minus$'
+      },
+      subscriptions() {
+        return {
+          count: merge(
+            this.muchMore$,
+            this.minus$.pipe(map(() => -1)),
+          ).pipe(
+            startWith(0),
+            scan((total, change) => total + change)
+          )
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
