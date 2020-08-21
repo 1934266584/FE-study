@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="box">
+    Sample content.
+  </div>
+</body>
+<script>
+// Web 动画仅修改元素的显示。如果你想让你的对象留在它被移动到的位置，那么当动画完成时你应该修改它的底层样式。这就是为什么我们要监听 finish 事件，并将 box.style.transform 属性设置为translate(150px, 200px)，这与我们动画的第二个变换相同。
+  var ele = document.querySelector('.box');
+  var animation = ele.animate([
+    { transform: 'translate(0)' },
+    { transform: 'translate(150px, 200px)' },
+  ], 500);
+  animation.addEventListener('finish', function() {
+    ele.style.transform = 'translate(150px, 200px)';
+  })
+</script>
+</html>

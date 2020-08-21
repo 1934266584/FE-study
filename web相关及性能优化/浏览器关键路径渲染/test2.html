@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  222
+  <script>
+    const time = Date.now();
+
+    while(Date.now() - time < 5000) {}
+    // 会阻塞渲染
+  </script>
+</body>
+</html>

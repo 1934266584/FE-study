@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type='text/css'>
+.box {
+-webkit-transform: translate(0, 0);
+-webkit-transition: -webkit-transform 1000ms;
+
+transform: translate(0, 0);
+transition: transform 1000ms;
+}
+
+.box.move {
+-webkit-transform: translate(50px, 50px);
+transform: translate(50px, 50px);
+}
+
+  </style>
+</head>
+<body>
+  <div class="box">
+    Sample content.
+  </div>
+</body>
+<script>
+  window.addEventListener('load',function() {
+    var boxEles = document.getElementsByClassName('box'),
+        boxEleLength = boxEles.length,
+        i;
+
+    for(i = 0; i < boxEleLength; i++) {
+      boxEles[i].classList.add('move');
+    }
+
+    var boxElement = document.querySelector('.box'); // 获取有 box 类的第一个元素。
+    // 监听 transitioned 过渡结束时触发的事件
+    boxElement.addEventListener('transitionend', onTransitionEnd, false);
+
+    function onTransitionEnd(e) {
+    // 处理过渡完成。
+      console.log(e,1)
+    }
+  })
+</script>
+</html>

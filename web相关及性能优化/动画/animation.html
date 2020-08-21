@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type='text/css'>
+    /**
+      * 这是没有加浏览器属性前缀的简化版本
+      * 如果加上，会比较冗长！
+    */
+    .box {
+      /* 指定动画 */
+      animation-name: movingBox;
+
+      /* 动画时长 */
+      animation-duration: 2300ms;
+
+      /* 动画重复次数 */
+      animation-iteration-count: infinite;
+
+      /* 动画正反交替进行 */
+      animation-direction: alternate;
+    }
+
+    @keyframes movingBox {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0.4;
+      }
+
+      25% {
+        opacity: 0.9;
+      }
+
+      50% {
+        transform: translate(150px, 200px);
+        opacity: 0.2;
+      }
+
+      100% {
+        transform: translate(40px, 30px);
+        opacity: 0.8;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="box">
+    Sample content.
+  </div>
+</body>
+</html>
