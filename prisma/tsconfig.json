@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["esnext", "DOM", "es2018.promise"],
+    "strict": true
+  },
+  "include": ["src/**/*"]
+}

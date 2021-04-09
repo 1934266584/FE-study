@@ -1,0 +1,1132 @@
+// 生成器(Generators) (可选): 用来说明基于数据模型生成哪些客户端(比如 Prisma Client JS 这个 javascript 客户端)
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 数据源: 用来说明 Prisma 如何连接到数据源(例如 PostgreSQL 数据库)
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:DiqPK759%pC7@106.52.218.27:3306/hunan_catv?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true"
+}
+
+// 数据模型定义: 用来说明你的应用程序模型(即每个数据源中数据的形态(shape))
+model activity {
+  activityId Int       @id @default(autoincrement())
+  title      String?   @default("") @db.VarChar(200)
+  describe   String?   @db.Text
+  cover      String?   @default("") @db.VarChar(500)
+  state      Int?      @default(1) @db.TinyInt
+  startTime  BigInt?   @default(631123200)
+  endTime    BigInt?   @default(631123200)
+  cTime      DateTime? @default(now()) @db.DateTime(0)
+  jumpPath   String?   @default("") @db.VarChar(500)
+  isTop      Int?      @default(0) @db.TinyInt
+}
+
+model activity_hb_rules {
+  id                  Int  @id @default(autoincrement())
+  activity_id         Int?
+  red_packet_rules_id Int?
+}
+
+model activity_video {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  activityId Int       @default(0)
+  memberId   Int       @default(0)
+  fileId     String?   @default("") @db.VarChar(200)
+  cover      String?   @default("") @db.VarChar(200)
+  cTime      DateTime? @default(now()) @db.Timestamp(0)
+  state      Int?      @default(0)
+}
+
+model album {
+  albumId       Int       @id @default(autoincrement())
+  columnId      Int?      @default(0)
+  charge        Int?      @default(1) @db.TinyInt
+  ascription    Int?      @default(1) @db.TinyInt
+  videoState    Int?      @default(1) @db.TinyInt
+  name          String?   @default("") @db.VarChar(100)
+  coverUrl      String?   @default("") @db.VarChar(200)
+  description   String?   @db.Text
+  performer     String?   @default("") @db.VarChar(200)
+  years         Int?      @default(0)
+  publishTime   String?   @default("") @db.VarChar(20)
+  director      String?   @default("") @db.VarChar(100)
+  region        String?   @default("") @db.VarChar(50)
+  videoNumber   Int?      @default(0)
+  updateExplain String?   @default("") @db.VarChar(100)
+  tags          String?   @default("[]") @db.VarChar(500)
+  state         Int?      @default(1) @db.TinyInt
+  cTime         DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model album_video {
+  videoId     Int       @id @default(autoincrement())
+  albumId     Int?      @default(0)
+  fileId      String?   @default("") @db.VarChar(50)
+  title       String?   @default("") @db.VarChar(50)
+  cover       String?   @default("") @db.VarChar(300)
+  url         String?   @db.Text
+  description String?   @default("") @db.VarChar(300)
+  charge      Int?      @default(0) @db.TinyInt
+  seq         Int?      @default(0)
+  state       Int?      @default(1) @db.TinyInt
+  cTime       DateTime? @default(now()) @db.Timestamp(0)
+  openChat    Int?      @default(0) @db.TinyInt
+  groupId     String?   @default("") @db.VarChar(100)
+}
+
+model app_push {
+  pushId         Int       @id @default(autoincrement()) @db.UnsignedInt
+  channel        Int?      @default(1) @db.TinyInt
+  audienceType   Int?      @default(1) @db.TinyInt
+  audienceTarget String?   @default("") @db.VarChar(500)
+  messageType    Int?      @default(1) @db.TinyInt
+  message        String?   @db.Text
+  title          String?   @default("") @db.VarChar(255)
+  content        String?   @db.Text
+  actionType     Int?      @default(1) @db.TinyInt
+  contentType    Int?      @default(1) @db.TinyInt
+  contentId      Int?      @default(0)
+  pushTime       DateTime? @default(now()) @db.Timestamp(0)
+  state          Int?      @default(1) @db.TinyInt
+}
+
+model app_push_aims_record {
+  id          Int       @id @default(autoincrement())
+  push_id     Int?
+  push_aims   String?   @db.VarChar(32)
+  create_time DateTime? @db.DateTime(0)
+  deleted     Int?      @default(0)
+}
+
+model app_push_message_record {
+  id            Int       @id @default(autoincrement())
+  push_title    String?   @db.VarChar(32)
+  push_content  String?   @db.Text
+  push_image    String?   @db.VarChar(1024)
+  push_url_id   Int?
+  push_platform Int?      @default(0)
+  push_aims     Int?
+  push_status   Int?      @default(0)
+  timing_time   DateTime? @db.DateTime(0)
+  offline_time  String?   @db.VarChar(32)
+  push_channel  Int?
+  uri_activity  String?   @db.VarChar(1024)
+  uri_action    String?   @db.VarChar(1024)
+  extend1       String?   @db.VarChar(1024)
+  extend2       String?   @db.VarChar(1024)
+  extend3       String?   @db.VarChar(1024)
+  extend4       String?   @db.VarChar(1024)
+  extend5       String?   @db.VarChar(1024)
+  push_time     DateTime? @db.DateTime(0)
+  create_time   DateTime? @db.DateTime(0)
+  create_by     Int?
+  update_by     Int?
+  update_time   DateTime? @db.DateTime(0)
+  deleted       Int?      @default(0)
+}
+
+model app_push_url {
+  id          Int       @id @default(autoincrement())
+  push_id     Int?
+  push_aims   Int?
+  links       String?   @db.VarChar(1024)
+  create_time DateTime? @db.DateTime(0)
+  deleted     Int?      @default(0)
+}
+
+model app_signing_management {
+  id          String    @id @db.VarChar(64)
+  version     String    @db.VarChar(32)
+  signing_key String?   @db.VarChar(64)
+  create_time DateTime? @db.DateTime(0)
+}
+
+model columns {
+  columnId Int      @id @default(autoincrement())
+  title    String?  @default("") @db.VarChar(100)
+  state    Boolean? @default(true)
+  type     Int?     @default(0) @db.TinyInt
+  seq      Int?     @default(0)
+  url      String?  @default("") @db.VarChar(200)
+  cTime    DateTime @default(now()) @db.Timestamp(0)
+  top      String?  @default("") @db.VarChar(200)
+}
+
+model comment {
+  comment_id         BigInt    @id @default(autoincrement())
+  answer_id          String    @db.VarChar(63)
+  answer_type        Int       @db.TinyInt
+  answer_name        String?   @db.VarChar(255)
+  member_id          Int
+  content            String?   @db.VarChar(1000)
+  state              Int       @default(1) @db.TinyInt
+  praise_count       Int?
+  answer_count       Int?
+  create_time        DateTime  @default(now()) @db.DateTime(0)
+  update_time        DateTime  @default(now()) @db.DateTime(0)
+  review_time        DateTime? @db.DateTime(0)
+  deleted            Int       @default(1) @db.TinyInt
+  create_by          Int?
+  update_by          Int?
+  level              Int?      @db.TinyInt
+  auto_review_result Int?      @db.TinyInt
+  auto_review_id     String?   @db.VarChar(127)
+  first_level_id     BigInt?
+  parent_id          BigInt?
+  official_reply     Int?      @default(0) @db.TinyInt
+  author_praise      Int?      @default(0) @db.TinyInt
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model comment_copy1 {
+  commentId   Int       @id @default(autoincrement())
+  answerId    String    @db.VarChar(64)
+  answerType  Int       @db.TinyInt
+  memberId    Int
+  content     String?   @db.VarChar(1000)
+  state       Boolean
+  praiseCount Int?
+  createTime  DateTime  @default(now()) @db.DateTime(0)
+  updateTime  DateTime  @default(now()) @db.DateTime(0)
+  review_time DateTime? @db.DateTime(0)
+}
+
+model comment_copy2 {
+  comment_id         BigInt    @id @default(autoincrement())
+  answer_id          String    @db.VarChar(63)
+  answer_type        Int       @db.TinyInt
+  answer_name        String?   @db.VarChar(255)
+  member_id          Int
+  content            String?   @db.VarChar(1000)
+  state              Int       @default(1) @db.TinyInt
+  praise_count       Int?
+  answer_count       Int?
+  create_time        DateTime  @default(now()) @db.DateTime(0)
+  update_time        DateTime  @default(now()) @db.DateTime(0)
+  review_time        DateTime? @db.DateTime(0)
+  deleted            Int       @default(1) @db.TinyInt
+  create_by          Int?
+  update_by          Int?
+  level              Int?      @db.TinyInt
+  auto_review_result Int?      @db.TinyInt
+  auto_review_id     String?   @db.VarChar(127)
+  first_level_id     BigInt?
+  parent_id          BigInt?
+  official_reply     Int?      @default(0) @db.TinyInt
+  author_praise      Int?      @default(0) @db.TinyInt
+}
+
+model comment_copy3 {
+  comment_id         BigInt    @id @default(autoincrement())
+  answer_id          String    @db.VarChar(63)
+  answer_type        Int       @db.TinyInt
+  answer_name        String?   @db.VarChar(255)
+  member_id          Int
+  content            String?   @db.VarChar(1000)
+  state              Int       @default(1) @db.TinyInt
+  praise_count       Int?
+  answer_count       Int?
+  create_time        DateTime  @default(now()) @db.DateTime(0)
+  update_time        DateTime  @default(now()) @db.DateTime(0)
+  review_time        DateTime? @db.DateTime(0)
+  deleted            Int       @default(1) @db.TinyInt
+  create_by          Int?
+  update_by          Int?
+  level              Int?      @db.TinyInt
+  auto_review_result Int?      @db.TinyInt
+  auto_review_id     String?   @db.VarChar(127)
+  first_level_id     BigInt?
+  parent_id          BigInt?
+  official_reply     Int?      @default(0) @db.TinyInt
+  author_praise      Int?      @default(0) @db.TinyInt
+}
+
+model comment_copy4 {
+  comment_id         BigInt    @id @default(autoincrement())
+  answer_id          String    @db.VarChar(63)
+  answer_type        Int       @db.TinyInt
+  answer_name        String?   @db.VarChar(255)
+  member_id          Int
+  content            String?   @db.VarChar(1000)
+  state              Int       @default(1) @db.TinyInt
+  praise_count       Int?
+  answer_count       Int?
+  create_time        DateTime  @default(now()) @db.DateTime(0)
+  update_time        DateTime  @default(now()) @db.DateTime(0)
+  review_time        DateTime? @db.DateTime(0)
+  deleted            Int       @default(1) @db.TinyInt
+  create_by          Int?
+  update_by          Int?
+  level              Int?      @db.TinyInt
+  auto_review_result Int?      @db.TinyInt
+  auto_review_id     String?   @db.VarChar(127)
+  first_level_id     BigInt?
+  parent_id          BigInt?
+  official_reply     Int?      @default(0) @db.TinyInt
+  author_praise      Int?      @default(0) @db.TinyInt
+
+  @@index([member_id], name: "index_member_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model comment_like {
+  memberId   Int
+  commentId  Int
+  type       String   @db.VarChar(1)
+  createTime DateTime @default(now()) @db.DateTime(0)
+  updateTime DateTime @default(now()) @db.DateTime(0)
+
+  @@index([memberId, commentId, type], name: "memberId_commentId_type")
+  @@ignore
+}
+
+model files {
+  fId              Int       @id @default(autoincrement())
+  type             Int?      @default(1) @db.TinyInt
+  fileId           String?   @db.VarChar(100)
+  name             String?   @default("") @db.VarChar(100)
+  seq              Int?      @default(1)
+  cover            String?   @default("") @db.VarChar(500)
+  url              String?   @db.Text
+  state            Int?      @default(1) @db.TinyInt
+  size             String?   @default("") @db.VarChar(100)
+  duration         String?   @default("") @db.VarChar(100)
+  cTime            DateTime? @default(now()) @db.Timestamp(0)
+  detail           String?   @db.Text
+  isActivity       Int?      @default(0) @db.TinyInt
+  video_proportion String?   @db.VarChar(32)
+}
+
+model home_recommend {
+  rId       Int       @id @default(autoincrement()) @db.UnsignedInt
+  title     String?   @default("") @db.VarChar(500)
+  pic       String?   @default("") @db.VarChar(500)
+  type      Int?      @default(1) @db.TinyInt
+  link      String?   @default("") @db.VarChar(500)
+  state     Int?      @default(0) @db.TinyInt
+  cTime     DateTime? @default(now()) @db.Timestamp(0)
+  startTime BigInt?   @default(0)
+  endTime   BigInt?   @default(0)
+}
+
+model interface_info {
+  api_id          Int       @id @default(autoincrement())
+  api_method      String    @db.VarChar(12)
+  api_path        String    @db.VarChar(512)
+  api_status      Int
+  api_comment     String?   @db.VarChar(255)
+  api_type        String    @db.VarChar(24)
+  api_script      String    @db.MediumText
+  api_schema      String?   @db.MediumText
+  api_sample      String?   @db.MediumText
+  api_option      String?   @db.MediumText
+  api_create_time DateTime? @default(now()) @db.DateTime(0)
+  api_gmt_time    DateTime? @default(now()) @db.DateTime(0)
+}
+
+model interface_release {
+  pub_id           Int       @id @default(autoincrement())
+  pub_api_id       Int
+  pub_method       String    @db.VarChar(12)
+  pub_path         String    @db.VarChar(512)
+  pub_status       Int
+  pub_type         String    @db.VarChar(24)
+  pub_script       String    @db.MediumText
+  pub_script_ori   String    @db.MediumText
+  pub_schema       String?   @db.MediumText
+  pub_sample       String?   @db.MediumText
+  pub_option       String?   @db.MediumText
+  pub_release_time DateTime? @default(now()) @db.DateTime(0)
+
+  @@index([pub_api_id], name: "idx_interface_release")
+}
+
+model live {
+  liveId      Int       @id @default(autoincrement()) @db.UnsignedInt
+  title       String?   @default("") @db.VarChar(255)
+  icon        String?   @default("") @db.VarChar(500)
+  description String?   @default("") @db.VarChar(500)
+  cover       String?   @default("") @db.VarChar(500)
+  contentType Int?      @default(1) @db.TinyInt
+  broadcast   String?   @default("") @db.VarChar(500)
+  program     String?   @default("") @db.VarChar(255)
+  roomId      String?   @default("") @db.VarChar(255)
+  columnId    Int?      @default(0)
+  liveStatus  Int?      @default(0) @db.TinyInt
+  state       Int?      @default(1) @db.TinyInt
+  startTime   BigInt?   @default(1593416276)
+  endTime     BigInt?   @default(1656488276)
+  cTime       DateTime? @default(now()) @db.Timestamp(0)
+  openChat    Int?      @default(0) @db.TinyInt
+  groupId     String?   @default("") @db.VarChar(100)
+  playMode    Int?      @default(1) @db.TinyInt
+  channelId   String?   @default("") @db.VarChar(100)
+  isTop       Int?      @default(0) @db.TinyInt
+  seq         Int?      @default(0)
+}
+
+model mall_qr_code {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  sku_id      Int
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  create_by   Int?
+  update_by   Int?
+  state       Int?      @db.TinyInt
+  deleted     Int?      @db.TinyInt
+}
+
+model mall_sku {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(255)
+  price        BigInt
+  origin       String?   @db.VarChar(64)
+  num          BigInt    @default(-1)
+  alias        String?   @db.VarChar(255)
+  description  String?   @db.VarChar(511)
+  detail_url   String?   @db.VarChar(1024)
+  image        String?   @db.VarChar(1024)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+  item_id      String?   @db.VarChar(255)
+  product_name String?   @db.VarChar(255)
+  state        Int?      @default(1) @db.TinyInt
+  deleted      Int?      @default(1) @db.TinyInt
+}
+
+model member {
+  memberId          Int       @id @default(autoincrement())
+  nickName          String?   @default("") @db.VarChar(500)
+  gender            Int?      @default(0) @db.TinyInt
+  wxOpenid          String?   @default("") @db.VarChar(50)
+  phone             String?   @unique @default("") @db.VarChar(30)
+  wxUnionid         String?   @default("") @db.VarChar(300)
+  avatarUrl         String?   @default("") @db.VarChar(500)
+  city              String?   @default("") @db.VarChar(100)
+  language          String?   @default("") @db.VarChar(100)
+  country           String?   @default("") @db.VarChar(100)
+  province          String?   @default("") @db.VarChar(100)
+  state             Int       @default(1) @db.TinyInt
+  regIp             String?   @default("") @db.VarChar(120)
+  regTime           DateTime  @default(now()) @db.Timestamp(0)
+  identifier        String?   @default("") @db.VarChar(100)
+  pushToken         String?   @default("") @db.VarChar(100)
+  bindCa            Int?      @default(0) @db.TinyInt
+  smartCardCode     String?   @default("") @db.VarChar(100)
+  appleId           String?   @default("") @db.VarChar(100)
+  inviteesStatus    Int?      @default(0) @db.TinyInt
+  inviter           Int?      @default(0)
+  member_type       Int?      @default(1)
+  official_account  Int?      @default(0) @db.TinyInt
+  default_attention Int?      @default(0) @db.TinyInt
+  last_login_time   DateTime? @db.DateTime(0)
+  deviceId          String?   @db.VarChar(64)
+  signature         String?   @db.VarChar(1024)
+  first_login_time  DateTime? @db.DateTime(0)
+
+  @@index([wxOpenid], name: "idx_openid")
+  @@index([memberId], name: "index_member_id")
+}
+
+model member_account_related {
+  id          Int       @id @default(autoincrement())
+  member_id   Int?
+  account_id  String?   @db.VarChar(64)
+  status      Int?      @default(1)
+  create_by   Int?
+  create_time DateTime? @db.DateTime(0)
+  update_by   Int?
+  update_time DateTime? @db.DateTime(0)
+}
+
+model member_assets {
+  id                 Int       @id @default(autoincrement())
+  member_id          Int?
+  total_assets       Decimal?  @db.Decimal(32, 2)
+  unavailable_assets Decimal?  @db.Decimal(32, 2)
+  total_amount       Decimal?  @db.Decimal(32, 2)
+  account_type       Int?      @default(0)
+  deleted            Int?      @default(1)
+  create_time        DateTime? @db.DateTime(0)
+  update_time        DateTime? @db.DateTime(0)
+  create_by          Int?
+  update_by          Int?
+  status             Int?      @default(1)
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model member_assets_detail {
+  id               Int       @id @default(autoincrement())
+  member_id        Int?
+  variable_amount  String?   @db.VarChar(127)
+  type             Int?
+  reason           String?   @db.VarChar(500)
+  create_time      DateTime? @db.DateTime(0)
+  member_assert_id Int?
+  amount           Decimal?  @db.Decimal(32, 2)
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model member_attention_record {
+  id             Int       @id @default(autoincrement())
+  status         Int?      @default(1)
+  create_by      Int?
+  create_time    DateTime? @db.DateTime(0)
+  update_by      Int?
+  update_time    DateTime? @db.DateTime(0)
+  member_id      Int?
+  attention_id   String?   @db.VarChar(32)
+  attention_type Int?      @default(0)
+  deleted        Int?      @default(1)
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model member_bind_record {
+  id          Int       @id @default(autoincrement())
+  member_id   Int?
+  bind_card   String?   @db.VarChar(128)
+  bind_type   Int?
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model member_blacklist {
+  id          Int       @id @default(autoincrement())
+  member_id   Int?
+  ban_period  Int?
+  ban_reasons String?   @db.VarChar(1024)
+  create_by   Int?
+  deleted     Int?      @default(1)
+  create_time DateTime? @default(now()) @db.Timestamp(0)
+  update_by   Int?
+  update_time DateTime? @db.DateTime(0)
+}
+
+model member_collect {
+  memberId    Int
+  itemId      Int
+  contentType Int       @db.TinyInt
+  cTime       DateTime? @default(now()) @db.Timestamp(0)
+
+  @@id([memberId, itemId, contentType])
+}
+
+model member_like {
+  memberId Int
+  itemId   Int
+  type     Int
+  cTime    DateTime? @default(now()) @db.Timestamp(0)
+
+  @@id([memberId, itemId, type])
+}
+
+model member_openid_info {
+  id                   Int       @id @default(autoincrement())
+  member_id            Int?
+  member_third_type    String?   @db.VarChar(32)
+  member_open_id       String    @db.VarChar(64)
+  status               Int?      @default(1)
+  deleted              Int?      @default(1)
+  create_by            Int?
+  create_time          DateTime? @db.DateTime(0)
+  update_by            Int?
+  update_time          DateTime? @db.DateTime(0)
+  member_third_open_id String?   @db.VarChar(64)
+}
+
+model member_reconciliation_record {
+  id               Int       @id @default(autoincrement())
+  member_id        Int?
+  withdraw_amount  Decimal?  @db.Decimal(32, 2)
+  status           Int?      @default(0)
+  type             Int?
+  reason           String?   @db.VarChar(500)
+  transaction_type String?   @db.VarChar(32)
+  transaction_id   String?   @db.VarChar(64)
+  deleted          Int?      @default(1)
+  create_time      DateTime? @db.DateTime(0)
+  update_time      DateTime? @db.DateTime(0)
+  create_by        Int?
+  update_by        Int?
+  member_assert_id Int?
+}
+
+model member_report_record {
+  id                 Int       @id @default(autoincrement())
+  report_tag         Int?
+  member_id          Int?
+  report_state       Int?      @default(0)
+  report_description String?   @db.Text
+  report_id          String?   @db.VarChar(128)
+  report_type        Int?
+  deleted            Int?      @default(1)
+  create_by          Int?
+  create_time        DateTime? @default(now()) @db.DateTime(0)
+  update_by          Int?
+  update_time        DateTime? @db.DateTime(0)
+}
+
+model member_right {
+  id          Int       @id @default(autoincrement())
+  member_id   Int?
+  right_code  String    @default("R000000") @db.VarChar(128)
+  begin_time  DateTime? @db.DateTime(0)
+  end_time    DateTime? @db.DateTime(0)
+  state       Int       @default(1) @db.TinyInt
+  deleted     Int       @default(1) @db.TinyInt
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  create_by   Int?
+  update_by   Int?
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model member_signin_record {
+  id          Int       @id @default(autoincrement())
+  sign_type   Int?
+  member_id   Int
+  status      Int?      @default(1)
+  create_by   Int?
+  create_time DateTime? @db.DateTime(0)
+  update_by   Int?
+  update_time DateTime? @db.DateTime(0)
+  device_no   String?   @db.VarChar(128)
+
+  @@index([device_no], name: "device_no_index")
+  @@index([member_id], name: "member_id_index")
+}
+
+model member_whitelist {
+  id             Int       @id @default(autoincrement())
+  status         Int?      @default(1)
+  member_type    Int?
+  member_id      Int?
+  create_by      Int?
+  create_time    DateTime? @db.DateTime(0)
+  update_by      Int?
+  update_time    DateTime? @db.DateTime(0)
+  deleted        Int?      @default(1)
+  member_name    String?   @db.VarChar(500)
+  id_card        String?   @db.VarChar(64)
+  member_company String?   @db.VarChar(128)
+}
+
+model member_withdraw_record {
+  id               Int       @id @default(autoincrement())
+  member_id        Int?
+  withdraw_amount  Decimal?  @db.Decimal(32, 2)
+  status           Int?
+  payment_source   String?   @db.VarChar(32)
+  transaction_type String?   @db.VarChar(32)
+  transaction_id   String?   @db.VarChar(64)
+  deleted          Int?      @default(1)
+  create_time      DateTime? @db.DateTime(0)
+  update_time      DateTime? @db.DateTime(0)
+  create_by        Int?
+  update_by        Int?
+}
+
+model mix_recommend {
+  recommendId Int  @id @default(autoincrement()) @db.UnsignedInt
+  isTop       Int? @default(0) @db.TinyInt
+  contentType Int? @default(1) @db.TinyInt
+  contentId   Int
+  state       Int? @default(1) @db.TinyInt
+  seq         Int? @default(0)
+}
+
+model news {
+  newsId             Int       @id @default(autoincrement())
+  cmsId              String?   @default("") @db.VarChar(50)
+  columnId           Int?      @default(0)
+  state              Int?      @default(0) @db.TinyInt
+  newsType           Int?      @default(2) @db.TinyInt
+  pubTime            BigInt?   @default(631123200)
+  title              String?   @default("") @db.VarChar(500)
+  secondary          String?   @default("") @db.VarChar(50)
+  author             String?   @default("") @db.VarChar(50)
+  contentHtml        String?   @db.Text
+  htmlIntro          String?   @db.Text
+  htmlRemark         String?   @db.Text
+  articleType        Int?      @default(0) @db.TinyInt
+  cover              String?   @db.Text
+  isOrg              Boolean?  @default(false)
+  typeId             Int?      @default(0)
+  keyWords           String?   @default("") @db.VarChar(200)
+  source             String?   @default("") @db.VarChar(200)
+  content            String?   @default("") @db.VarChar(300)
+  duration           String?   @default("0") @db.VarChar(100)
+  fileSize           String?   @db.Text
+  picMinivideo       String?   @default("") @db.VarChar(200)
+  vId                String?   @default("") @db.VarChar(50)
+  vKey               String?   @default("") @db.VarChar(100)
+  cTime              BigInt?   @default(631123200)
+  seq                Int?      @default(0)
+  location           String?   @default("") @db.VarChar(200)
+  fileId             String?   @default("") @db.VarChar(50)
+  region             Boolean?  @default(false)
+  url                String?   @db.Text
+  tags               String?   @default("[]") @db.VarChar(500)
+  likeNum            Int?      @default(1)
+  playNum            Int?      @default(1)
+  baseLike           Int?      @default(1)
+  basePlay           Int?      @default(1)
+  release_time       DateTime? @db.DateTime(0)
+  audit_results_type String?   @db.VarChar(255)
+  review_id          String?   @db.VarChar(128)
+  video_proportion   String?   @db.VarChar(32)
+  deleted            Int?      @default(1)
+  member_id          Int?
+  video_source       Int?      @default(0)
+  pgc_recommend      Boolean?  @default(true)
+  positio            String?   @db.VarChar(255)
+  top                Boolean?  @default(false)
+
+  @@index([member_id], name: "index_member_id")
+  @@index([newsId], name: "index_news_id")
+}
+
+model news_copy1 {
+  newsId             Int       @id @default(autoincrement())
+  cmsId              String?   @default("") @db.VarChar(50)
+  columnId           Int?      @default(0)
+  state              Int?      @default(0) @db.TinyInt
+  newsType           Int?      @default(2) @db.TinyInt
+  pubTime            BigInt?   @default(631123200)
+  title              String?   @default("") @db.VarChar(50)
+  secondary          String?   @default("") @db.VarChar(50)
+  author             String?   @default("") @db.VarChar(50)
+  contentHtml        String?   @db.Text
+  htmlIntro          String?   @db.Text
+  htmlRemark         String?   @db.Text
+  articleType        Int?      @default(0) @db.TinyInt
+  cover              String?   @db.Text
+  isOrg              Boolean?  @default(false)
+  typeId             Int?      @default(0)
+  keyWords           String?   @default("") @db.VarChar(200)
+  source             String?   @default("") @db.VarChar(200)
+  content            String?   @default("") @db.VarChar(300)
+  duration           String?   @default("0") @db.VarChar(100)
+  fileSize           String?   @db.Text
+  picMinivideo       String?   @default("") @db.VarChar(200)
+  vId                String?   @default("") @db.VarChar(50)
+  vKey               String?   @default("") @db.VarChar(100)
+  cTime              BigInt?   @default(631123200)
+  seq                Int?      @default(0)
+  location           String?   @default("") @db.VarChar(200)
+  fileId             String?   @default("") @db.VarChar(50)
+  region             Boolean?  @default(false)
+  url                String?   @db.Text
+  tags               String?   @default("[]") @db.VarChar(500)
+  likeNum            Int?      @default(1)
+  playNum            Int?      @default(1)
+  baseLike           Int?      @default(1)
+  basePlay           Int?      @default(1)
+  release_time       DateTime? @db.DateTime(0)
+  audit_results_type String?   @db.VarChar(255)
+  review_id          String?   @db.VarChar(128)
+  video_proportion   String?   @db.VarChar(32)
+  deleted            Int?      @default(1)
+  member_id          Int?
+  video_source       Int?      @default(0)
+  pgc_recommend      Boolean?  @default(true)
+  positio            String?   @db.VarChar(32)
+}
+
+model news_music {
+  id          Int       @id @default(autoincrement())
+  fileId      String?   @db.VarChar(127)
+  music_name  String    @db.VarChar(127)
+  url         String?   @db.Text
+  duration    String?   @default("0") @db.VarChar(127)
+  content     String?   @db.VarChar(511)
+  state       Int?      @db.TinyInt
+  seq         Int       @default(1)
+  create_time DateTime? @default(now()) @db.DateTime(0)
+  update_time DateTime? @default(now()) @db.DateTime(0)
+  create_by   Int?
+  update_by   Int?
+  deleted     Int       @default(1) @db.TinyInt
+}
+
+model news_stickers {
+  id           Int       @id @default(autoincrement())
+  fileId       String?   @db.VarChar(127)
+  sticker_name String    @db.VarChar(127)
+  url          String?   @db.Text
+  content      String?   @db.VarChar(511)
+  state        Int?      @db.TinyInt
+  seq          Int       @default(1)
+  create_time  DateTime? @default(now()) @db.DateTime(0)
+  update_time  DateTime? @default(now()) @db.DateTime(0)
+  create_by    Int?
+  update_by    Int?
+  deleted      Int       @default(1) @db.TinyInt
+  hot          Int?      @default(1) @db.TinyInt
+}
+
+model news_test {
+  newsId             Int       @id @default(autoincrement())
+  cmsId              String?   @default("") @db.VarChar(50)
+  columnId           Int?      @default(0)
+  state              Int?      @default(0) @db.TinyInt
+  newsType           Int?      @default(2) @db.TinyInt
+  pubTime            BigInt?   @default(631123200)
+  title              String?   @default("") @db.VarChar(500)
+  secondary          String?   @default("") @db.VarChar(50)
+  author             String?   @default("") @db.VarChar(50)
+  contentHtml        String?   @db.Text
+  htmlIntro          String?   @db.Text
+  htmlRemark         String?   @db.Text
+  articleType        Int?      @default(0) @db.TinyInt
+  cover              String?   @db.Text
+  isOrg              Boolean?  @default(false)
+  typeId             Int?      @default(0)
+  keyWords           String?   @default("") @db.VarChar(200)
+  source             String?   @default("") @db.VarChar(200)
+  content            String?   @default("") @db.VarChar(300)
+  duration           String?   @default("0") @db.VarChar(100)
+  fileSize           String?   @db.Text
+  picMinivideo       String?   @default("") @db.VarChar(200)
+  vId                String?   @default("") @db.VarChar(50)
+  vKey               String?   @default("") @db.VarChar(100)
+  cTime              BigInt?   @default(631123200)
+  seq                Int?      @default(0)
+  location           String?   @default("") @db.VarChar(200)
+  fileId             String?   @default("") @db.VarChar(50)
+  region             Boolean?  @default(false)
+  url                String?   @db.Text
+  tags               String?   @default("[]") @db.VarChar(500)
+  likeNum            Int?      @default(1)
+  playNum            Int?      @default(1)
+  baseLike           Int?      @default(1)
+  basePlay           Int?      @default(1)
+  release_time       DateTime? @db.DateTime(0)
+  audit_results_type String?   @db.VarChar(255)
+  review_id          String?   @db.VarChar(128)
+  video_proportion   String?   @db.VarChar(32)
+  deleted            Int?      @default(1)
+  member_id          Int?
+  video_source       Int?      @default(0)
+  pgc_recommend      Boolean?  @default(true)
+  positio            String?   @db.VarChar(32)
+  top                Boolean?  @default(false)
+
+  @@index([member_id], name: "index_member_id")
+  @@index([newsId], name: "index_news_id")
+}
+
+model pgc_news {
+  pgcId            String    @id @db.VarChar(64)
+  cmsId            String?   @default("") @db.VarChar(50)
+  columnId         Int?      @default(0)
+  state            Int?      @default(0) @db.TinyInt
+  newsType         Int?      @default(2) @db.TinyInt
+  pubTime          BigInt?   @default(631123200)
+  title            String?   @default("") @db.VarChar(500)
+  secondary        String?   @default("") @db.VarChar(500)
+  member_id        Int?
+  author           String?   @default("") @db.VarChar(500)
+  contentHtml      String?   @db.Text
+  htmlIntro        String?   @db.Text
+  htmlRemark       String?   @db.Text
+  articleType      Int?      @default(0) @db.TinyInt
+  cover            String?   @db.Text
+  isOrg            Boolean?  @default(false)
+  typeId           Int?      @default(0)
+  keyWords         String?   @default("") @db.VarChar(500)
+  source           String?   @default("") @db.VarChar(500)
+  content          String?   @default("") @db.VarChar(500)
+  duration         String?   @default("0") @db.VarChar(100)
+  fileSize         String?   @db.Text
+  picMinivideo     String?   @default("") @db.VarChar(200)
+  vId              String?   @default("") @db.VarChar(500)
+  vKey             String?   @default("") @db.VarChar(100)
+  create_time      DateTime? @db.DateTime(0)
+  seq              Int?      @default(0)
+  location         String?   @default("") @db.VarChar(500)
+  fileId           String?   @default("") @db.VarChar(500)
+  region           Boolean?  @default(false)
+  url              String?   @db.Text
+  tags             String?   @default("[]") @db.VarChar(500)
+  likeNum          Int?      @default(1)
+  playNum          Int?      @default(1)
+  baseLike         Int?      @default(1)
+  basePlay         Int?      @default(1)
+  activity_id      Int?
+  review_id        String?   @db.VarChar(128)
+  video_proportion String?   @db.VarChar(32)
+  deleted          Int?      @default(1)
+}
+
+model praise {
+  id             BigInt   @id @default(autoincrement())
+  be_praise_id   String   @db.VarChar(64)
+  be_praise_type Int      @db.TinyInt
+  be_member_id   Int?
+  member_id      Int
+  state          Int?     @default(1) @db.TinyInt
+  create_time    DateTime @default(now()) @db.DateTime(0)
+  update_time    DateTime @default(now()) @db.DateTime(0)
+  deleted        Int      @default(1) @db.TinyInt
+
+  @@index([member_id], name: "index_member_id")
+}
+
+model red_packet_rules {
+  id                Int       @id @default(autoincrement())
+  max_count         Int?
+  min_count         Int?
+  max_money         Int?
+  min_money         Int?
+  max_receive_count Int?
+  status            Int?
+  type              Int?
+  deleted           Int?      @default(1)
+  create_by         Int?
+  create_time       DateTime? @db.DateTime(0)
+  update_by         Int?
+  update_time       DateTime? @db.DateTime(0)
+}
+
+model stickers_tags {
+  id          Int       @id @default(autoincrement())
+  tagId       Int
+  stickerId   Int?
+  create_time DateTime? @default(now()) @db.DateTime(0)
+  update_time DateTime? @default(now()) @db.DateTime(0)
+  create_by   Int?
+  update_by   Int?
+  deleted     Int       @default(1) @db.TinyInt
+
+  @@unique([tagId, stickerId], name: "stickerId_tagId_uniq_index")
+}
+
+model system_api {
+  id          Int       @id @default(autoincrement())
+  url         String    @db.VarChar(511)
+  description String?   @db.VarChar(511)
+  create_time DateTime? @default(now()) @db.DateTime(0)
+  update_time DateTime? @default(now()) @db.DateTime(0)
+  deleted     Int       @default(1) @db.TinyInt
+  state       Int?      @default(1) @db.TinyInt
+  sign        Int       @default(1) @db.TinyInt
+  create_by   Int?
+  update_by   Int?
+}
+
+model system_auth {
+  sysAuthId     Int     @id @default(autoincrement())
+  sysAuthName   String  @db.VarChar(50)
+  sysAuthAction String  @default("") @db.VarChar(300)
+  sysAuthPid    Int     @default(0)
+  state         Int     @default(1) @db.TinyInt
+  level         Int?    @default(1) @db.TinyInt
+  icon          String? @default("") @db.VarChar(200)
+  hidden        Int?    @default(1) @db.TinyInt
+  border        Int?    @default(0)
+}
+
+model system_dict {
+  sysDictId Int    @id @default(autoincrement())
+  dictName  String @db.VarChar(255)
+  dictValue String @db.Text
+  dictDesc  String @default("") @db.VarChar(500)
+
+  @@index([dictName], name: "idx_dn")
+}
+
+model system_role {
+  sysRoleId   Int    @id @default(autoincrement())
+  sysRoleName String @default("") @db.VarChar(50)
+  state       Int    @default(1) @db.TinyInt
+}
+
+model system_role_auth {
+  sysRoleId Int @default(autoincrement())
+  sysAuthId Int
+
+  @@id([sysRoleId, sysAuthId])
+}
+
+model system_user {
+  sysUserId   Int     @id @default(autoincrement())
+  sysRoleId   Int
+  sysUserName String  @default("") @db.VarChar(300)
+  sysUserMail String  @default("") @db.VarChar(300)
+  sysUserPwd  String  @default("") @db.VarChar(300)
+  state       Int     @default(1) @db.TinyInt
+  phone       String? @default("") @db.VarChar(100)
+  operateAuth Int?    @default(1) @db.TinyInt
+
+  @@index([sysUserMail], name: "idx_mail")
+}
+
+model sys_log {
+  id               BigInt    @id @default(autoincrement())
+  operateId        String    @db.VarChar(32)
+  operator         String?   @db.VarChar(32)
+  operation_type   String?   @default("") @db.VarChar(10)
+  running_time     BigInt?
+  module_name      String?   @db.Text
+  method_name      String?   @db.VarChar(200)
+  method_args      String?   @db.Text
+  return_value     String?   @db.Text
+  return_msg       String?   @db.VarChar(640)
+  operate_content  String?   @db.VarChar(480)
+  request_url      String?   @db.VarChar(360)
+  ip_addr          String?   @db.VarChar(200)
+  operation_time   DateTime? @db.DateTime(0)
+  operation_status String?   @db.Char(10)
+}
+
+model tag {
+  tagId    Int       @id @default(autoincrement())
+  tagType  Int?      @default(1) @db.TinyInt
+  columnId Int?      @default(0)
+  name     String?   @default("") @db.VarChar(100)
+  level    Int?      @default(1) @db.TinyInt
+  parentId Int?      @default(0)
+  state    Boolean?  @default(true)
+  cTime    DateTime? @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model tag_content {
+  firTagId    Int
+  secTagId    Int  @default(0)
+  columnId    Int
+  contentId   Int
+  contentType Int? @default(1) @db.TinyInt
+
+  @@ignore
+}
+
+model tasks {
+  taskId Int       @id @default(autoincrement()) @db.UnsignedInt
+  type   Int?      @default(1) @db.TinyInt
+  name   String?   @default("") @db.VarChar(200)
+  detail String?   @default("") @db.VarChar(500)
+  link   String?   @default("") @db.VarChar(500)
+  state  Int?      @default(0) @db.TinyInt
+  cTime  DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model test {
+  id      Int     @id
+  content String? @db.VarChar(255)
+}
+
+model type_tags {
+  id          Int       @id @default(autoincrement())
+  tag_name    String    @unique @db.VarChar(127)
+  content     String?   @db.VarChar(511)
+  state       Int       @default(1) @db.TinyInt
+  seq         Int       @default(1)
+  create_time DateTime? @default(now()) @db.DateTime(0)
+  update_time DateTime? @default(now()) @db.DateTime(0)
+  create_by   Int?
+  update_by   Int?
+  deleted     Int       @default(1) @db.TinyInt
+  parent_id   Int       @default(0)
+}
+
+model ugc_news {
+  ugc_id           String    @id @db.VarChar(64)
+  member_id        Int?
+  member_phone     String?   @db.VarChar(11)
+  member_name      String?   @db.VarChar(256)
+  columnId         Int?      @default(0)
+  state            Int?      @default(0) @db.TinyInt
+  newsType         Int?      @default(2) @db.TinyInt
+  pubTime          BigInt?   @default(631123200)
+  title            String?   @db.VarChar(50)
+  secondary        String?   @db.VarChar(50)
+  author           String?   @db.VarChar(50)
+  contentHtml      String?   @db.Text
+  htmlIntro        String?   @db.Text
+  htmlRemark       String?   @db.Text
+  articleType      Int?      @default(0) @db.TinyInt
+  cover            String?   @db.Text
+  isOrg            Boolean?  @default(false)
+  typeId           Int?      @default(0)
+  keyWords         String?   @db.VarChar(200)
+  source           String?   @db.VarChar(200)
+  content          String?   @db.VarChar(300)
+  duration         String?   @default("0") @db.VarChar(100)
+  fileSize         String?   @db.Text
+  picMinivideo     String?   @db.VarChar(200)
+  vId              String?   @db.VarChar(50)
+  vKey             String?   @db.VarChar(100)
+  cTime            DateTime? @db.DateTime(0)
+  seq              Int?      @default(0)
+  location         String?   @db.VarChar(200)
+  fileId           String?   @db.VarChar(50)
+  region           Boolean?  @default(false)
+  url              String?   @db.Text
+  tags             String?   @db.VarChar(500)
+  likeNum          Int?      @default(1)
+  playNum          Int?      @default(1)
+  baseLike         Int?      @default(1)
+  basePlay         Int?      @default(1)
+  activity_id      Int?
+  review_id        String?   @db.VarChar(128)
+  video_proportion String?   @db.VarChar(32)
+  deleted          Int?      @default(1)
+}
+
+model umeng_statistics_record {
+  id                       Int       @id @default(autoincrement())
+  today_launch_total       BigInt?
+  today_add_total          BigInt?
+  today_active_total       BigInt?
+  today_active_alone_total BigInt?
+  today_add_alone_total    BigInt?
+  current_total_user       BigInt?
+  create_time              DateTime? @db.Date
+}
+
+model upgrade {
+  id          BigInt   @id @default(autoincrement())
+  versionCode Int
+  versionName String?  @default("") @db.VarChar(100)
+  brief       String?  @default("") @db.VarChar(300)
+  upgradeType Int?     @default(0) @db.TinyInt
+  apkUrl      String?  @default("") @db.VarChar(500)
+  md5         String?  @db.VarChar(32)
+  state       Int?     @default(0) @db.TinyInt
+  cTime       DateTime @default(now()) @db.Timestamp(0)
+  channel     Int
+  size        String?  @default("") @db.VarChar(100)
+  realSize    BigInt?  @default(0)
+  cName       String?  @default("") @db.VarChar(200)
+}
+
+model wx_red_packet_record {
+  id           Int       @id @default(autoincrement())
+  mch_billno   String?   @db.VarChar(32)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+  mch_id       String?   @db.VarChar(32)
+  wxappid      String?   @db.VarChar(32)
+  re_openid    String?   @db.VarChar(32)
+  total_amount Int?
+  send_listid  String?   @db.VarChar(32)
+  state        Int?      @default(1)
+  return_code  String?   @db.VarChar(32)
+  reason       String?   @db.VarChar(3072)
+  deleted      Int?      @default(1)
+  create_by    Int?
+  update_by    Int?
+  hb_type      String?   @db.VarChar(32)
+  total_num    Int?
+}
